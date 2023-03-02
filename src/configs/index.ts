@@ -5,11 +5,11 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export interface Config {
-  discordToken: string
+  port: string
   mongoDBString: string
   environment: string
-  OPENAI_KEY: string
-  OPENAI_ORG: string
+  appSecret: string
+  webhookAccessToken: string
 }
 
 export const config = (() => {
