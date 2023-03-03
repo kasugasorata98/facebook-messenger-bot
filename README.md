@@ -1,5 +1,3 @@
-# facebook-messenger-bot
-
 # Facebook Messenger Bot
 
 To develop a facebook messenger bot for respond.io
