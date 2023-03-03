@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import { config } from '../../../configs'
+import { Constants } from '../../../constants'
 import { WebHook } from '../../../entities/webhook.entities'
 import BotController from '../../../modules/bot/bot.controller'
 const router = express.Router()
@@ -12,15 +13,9 @@ router.post('/webhook', async (req: Request, res: Response) => {
     entry.forEach(entry => {
       const { id, time, messaging } = entry
       messaging?.forEach(async event => {
-        if (!event.message) return
-        if (event.message) {
-          const bot = BotController.getInstance()
-          const res = await bot.handleMessage(
-            event.sender.id,
-            event.message.text
-          )
-          console.log(res)
-        }
+        if (!event.message || event.sender.id === Constants.SELF_ID) return
+        const bot = BotController.getInstance()
+        await bot.handleMessage(event.sender.id, event.message.text)
       })
     })
   }
