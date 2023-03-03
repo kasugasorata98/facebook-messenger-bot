@@ -8,7 +8,6 @@ const router = express.Router()
 router.post('/webhook', async (req: Request, res: Response) => {
   const body = req.body
   const { object, entry }: WebHook = body
-
   if (object === 'page') {
     entry.forEach(entry => {
       const { id, time, messaging } = entry
