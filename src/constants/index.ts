@@ -6,4 +6,9 @@ export const Constants = {
     `I hope you're having a great day.`,
   ],
   CUSTOMER_GREETING: ['hi', 'hello', 'good morning'],
+  COMMAND: {
+    DESC: 'desc',
+    PRICE: 'price',
+    SHIPPING: 'shipping',
+  },
 }

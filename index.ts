@@ -14,6 +14,7 @@ async function main() {
       extended: true,
     })
   )
+
   const routerPaths = glob.globSync('./src/api/v1/**/*.ts')
 
   const routes = await Promise.all(

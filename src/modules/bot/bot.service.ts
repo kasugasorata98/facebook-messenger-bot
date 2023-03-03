@@ -14,13 +14,12 @@ class BotService {
     return shouldSendGreeting
   }
 
-  public async sendMessage(id: string, message: string) {
-    //'5835952803139760'
+  public async sendMessage(recipientID: string, message: string) {
     const { data } = await AxiosClient.post(
       `https://graph.facebook.com/v12.0/me/messages?access_token=${config.webhookAccessToken}`,
       {
         recipient: {
-          id,
+          id: recipientID,
         },
         message: {
           text: message,
