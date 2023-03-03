@@ -17,4 +17,7 @@ export const Utils = {
   isDev: (): boolean => {
     return config.environment === 'dev' || config.environment === 'development'
   },
+  randomNumber: (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  },
 }
