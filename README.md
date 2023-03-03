@@ -26,19 +26,6 @@ or
 npm run start
 ```
 
-env file requirement
-
-```sh
-NODE_ENV
-PORT
-WEBHOOK_ACCESS_TOKEN
-APP_SECRET
-MONGODB_CONNECTION_STRING
-SENDGRID_API_KEY
-VERIFIED_SENDER_EMAIL
-RECEIVER_EMAIL
-```
-
 .env
 | KEY | DESCRIPTION |
 | ------ | ------ |
