@@ -127,6 +127,10 @@ class BotController {
             </table>
           `,
         })
+        await this.botService.sendMessage(
+          senderID,
+          'We will process your order.'
+        )
         break
       }
     }
