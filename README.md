@@ -42,4 +42,3 @@ How to solve the high volume of write operations in RDS MySQL databases?
 
 - By using caching, such as Redis to store data. This can reduce the number of writes that are frequently needed to the database as the frequently accessed data can be served from the cache instead.
 - Use a queuing system to execute the database queries x number of times per minute.
--
