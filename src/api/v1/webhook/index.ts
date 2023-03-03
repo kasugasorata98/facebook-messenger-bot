@@ -24,10 +24,6 @@ router.post('/webhook', async (req: Request, res: Response) => {
 })
 
 router.get('/webhook', (req: Request, res: Response) => {
-  console.log({
-    get: req.body,
-  })
-  // Parse the query params
   let mode = req.query['hub.mode']
   let token = req.query['hub.verify_token']
   let challenge = req.query['hub.challenge']
