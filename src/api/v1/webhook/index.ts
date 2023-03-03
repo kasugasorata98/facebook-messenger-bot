@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { config } from '../../../configs'
 import { WebHook } from '../../../entities/webhook.entities'
+import BotController from '../../../modules/bot/bot.controller'
 const router = express.Router()
 
 router.post('/webhook', async (req: Request, res: Response) => {
@@ -10,15 +11,15 @@ router.post('/webhook', async (req: Request, res: Response) => {
   if (object === 'page') {
     entry.forEach(entry => {
       const { id, time, messaging } = entry
-      messaging?.forEach(event => {
+      messaging?.forEach(async event => {
         if (!event.message) return
-        console.log(event)
         if (event.message) {
-          // Handle message event
-        } else if (event.postback) {
-          // Handle postback event
-        } else if (event.delivery) {
-          // Handle delivery confirmation event
+          const bot = BotController.getInstance()
+          const res = await bot.handleMessage(
+            event.sender.id,
+            event.message.text
+          )
+          console.log(res)
         }
       })
     })
