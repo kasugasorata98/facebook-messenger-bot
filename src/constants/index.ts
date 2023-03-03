@@ -10,5 +10,6 @@ export const Constants = {
     DESC: 'desc',
     PRICE: 'price',
     SHIPPING: 'shipping',
+    BUY: 'buy',
   },
 }

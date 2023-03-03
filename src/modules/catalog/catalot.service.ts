@@ -2,23 +2,12 @@ import { Constants } from '../../constants'
 import catalogModel from '../../models/catalog.model'
 
 class CatalogService {
-  getProduct(sku: number, command: 'desc' | 'price' | 'shipping') {
+  getProduct(sku: number, select: string | null) {
     return catalogModel
       .findOne({
         sku,
       })
-      .select(
-        (() => {
-          switch (command) {
-            case Constants.COMMAND.DESC:
-              return 'description'
-            case Constants.COMMAND.PRICE:
-              return 'price'
-            case Constants.COMMAND.SHIPPING:
-              return 'shipping'
-          }
-        })()
-      )
+      .select(select)
   }
 }
 export default CatalogService

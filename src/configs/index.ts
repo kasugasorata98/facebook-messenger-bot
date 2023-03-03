@@ -4,14 +4,6 @@ import staging from './staging'
 import dotenv from 'dotenv'
 dotenv.config()
 
-export interface Config {
-  port: string
-  mongoDBString: string
-  environment: string
-  appSecret: string
-  webhookAccessToken: string
-}
-
 export const config = (() => {
   switch (process.env.NODE_ENV || 'development') {
     case 'prod':

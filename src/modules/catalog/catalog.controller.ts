@@ -6,8 +6,8 @@ class CatalogController {
   constructor() {
     this.catalogService = new CatalogService()
   }
-  getProduct(sku: number, command: 'desc' | 'price' | 'shipping') {
-    return this.catalogService.getProduct(sku, command)
+  getProduct(sku: number, select: string | null = null) {
+    return this.catalogService.getProduct(sku, select)
   }
 }
 export default CatalogController

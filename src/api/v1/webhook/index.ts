@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express'
 import { config } from '../../../configs'
 import { Constants } from '../../../constants'
-import { WebHook } from '../../../entities/webhook.entities'
+import { WebHook } from '../../../entities/webhook.entity'
 import BotController from '../../../modules/bot/bot.controller'
 const router = express.Router()
 
