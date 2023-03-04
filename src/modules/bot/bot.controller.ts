@@ -95,7 +95,7 @@ class BotController {
           )
         await this.sendmailController.sendMail({
           subject: 'BUY ORDER FROM ' + senderID,
-          text: '',
+          text: senderID,
           html: `
           <table style="border-collapse: collapse; width: 100%;">
             <thead>
