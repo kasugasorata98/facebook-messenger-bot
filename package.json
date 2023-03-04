@@ -7,7 +7,8 @@
     "start": "ts-node index.js",
     "dev": "nodemon --exec ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "insert": "ts-node ./src/scripts/insertProduct.ts"
+    "insert": "ts-node ./src/scripts/insertProduct.ts",
+    "task2": "ts-node ./src/scripts/task2.ts"
   },
   "keywords": [],
   "author": "",
