@@ -43,9 +43,9 @@ function findDuplicateTransactions(transactions: Array<Transaction> = []) {
       ) {
         // means current and previous are duplicates under 1 minute
         if (
-          duplicatesWithin1Minute[count].find(duplicate => {
-            return duplicate.id === prevTransaction.id
-          })
+          duplicatesWithin1Minute[count][
+            duplicatesWithin1Minute[count].length - 1
+          ]?.id === prevTransaction.id
         ) {
           duplicatesWithin1Minute[count] = [
             ...duplicatesWithin1Minute[count],

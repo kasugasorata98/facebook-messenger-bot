@@ -3,6 +3,7 @@ import cors from 'cors'
 import glob from 'glob'
 import { config } from './src/configs'
 import MongooseClient from './src/lib/MongooseClient'
+import Logger from './src/logger'
 
 const app = express()
 
