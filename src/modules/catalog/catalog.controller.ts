@@ -6,8 +6,8 @@ class CatalogController {
   constructor() {
     this.catalogService = new CatalogService()
   }
-  getProduct(sku: number, select: string | null = null) {
-    return this.catalogService.getProduct(sku, select)
+  async getProduct(sku: number, select: string | null = null) {
+    return await this.catalogService.getProduct(sku, select)
   }
 }
 export default CatalogController

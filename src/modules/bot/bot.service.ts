@@ -1,4 +1,3 @@
-import { AxiosError, isAxiosError } from 'axios'
 import { config } from '../../configs'
 import { Constants } from '../../constants'
 import AxiosClient from '../../lib/AxiosClient'

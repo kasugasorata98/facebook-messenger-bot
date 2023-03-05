@@ -26,6 +26,13 @@ or
 npm run start
 ```
 
+Task 2: Clean and Sort the Transactions
+
+```sh
+cd facebook-messenger-bot
+npm run task2
+```
+
 .env
 | KEY | DESCRIPTION |
 | ------ | ------ |
