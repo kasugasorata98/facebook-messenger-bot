@@ -77,7 +77,7 @@ class BotController {
           productSKU,
           'description'
         )
-        console.log(res?.description)
+        logs.traces.push({ product: res })
         await this.botService.sendMessage(
           senderID,
           res?.description || 'This product has no description'
@@ -86,6 +86,7 @@ class BotController {
       }
       case Constants.COMMAND.PRICE: {
         const res = await this.catalogController.getProduct(productSKU, 'price')
+        logs.traces.push({ product: res })
         await this.botService.sendMessage(
           senderID,
           res?.price.toString() || 'This product has no price'
@@ -97,6 +98,7 @@ class BotController {
           productSKU,
           'shipping'
         )
+        logs.traces.push({ product: res })
         await this.botService.sendMessage(
           senderID,
           res?.shipping.toString() || 'This product has no shipping price'
