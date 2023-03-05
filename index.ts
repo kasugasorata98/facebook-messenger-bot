@@ -3,6 +3,7 @@ import cors from 'cors'
 import glob from 'glob'
 import { config } from './src/configs'
 import MongooseClient from './src/lib/MongooseClient'
+import logger from './src/logger'
 
 const app = express()
 
@@ -16,7 +17,9 @@ async function main() {
   )
 
   const routerPaths = glob.globSync('./src/api/v1/**/*.ts')
-
+  logger.log({
+    routerPaths,
+  })
   const routes = await Promise.all(
     routerPaths.map(async routerPath => {
       const module = await import(`.\\${routerPath}`)
@@ -25,6 +28,10 @@ async function main() {
   )
 
   app.get('/', (_: Request, res: Response) => {
+    logger.log({
+      endpoint: '/',
+      response: 'Ok',
+    })
     res.json('Health Check: Ok')
   })
 
@@ -33,13 +40,17 @@ async function main() {
   })
   MongooseClient.connect(config.mongoDBString)
     .then(async res => {
-      console.log('MongoDB connected to ' + res.connections[0].name)
+      logger.log('MongoDB connected to ' + res.connections[0].name)
       app.listen(config.port || 3000, () => {
-        console.log('App listening at port: ' + (config.port || 3000))
+        logger.log('App listening at port: ' + (config.port || 3000))
       })
     })
     .catch(err => {
-      console.log(err)
+      logger.error({
+        err,
+        message: err?.message,
+        code: err?.code,
+      })
     })
 }
 

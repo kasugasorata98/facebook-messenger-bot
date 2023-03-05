@@ -1,5 +1,7 @@
 import { config } from '../../configs'
 import { Constants } from '../../constants'
+import { Logs } from '../../entities/logs.entity'
+import logger from '../../logger'
 import { Utils } from '../../utils'
 import CatalogController from '../catalog/catalog.controller'
 import SendMailController from '../sendmail/sendmail.controller'
@@ -24,33 +26,48 @@ class BotController {
     return BotController.instance
   }
 
-  public async handleMessage(senderID: string, message: string) {
+  public async handleMessage(senderID: string, message: string, logs: Logs) {
+    logs.functionName = this.handleMessage.name
     if (this.botService.shouldSendGreeting(message)) {
-      await this.botService.sendMessage(
+      const randomGreeting = Constants.RANDOM_REPLIES[Utils.randomNumber(0, 2)]
+      logs.traces.push({
+        message: 'Sending Greeting Message',
+        randomGreeting,
+      })
+      const response = await this.botService.sendMessage(
         senderID,
-        Constants.RANDOM_REPLIES[Utils.randomNumber(0, 2)]
+        randomGreeting
       )
+      logs.traces.push({
+        sendMessageResponse: response,
+      })
     } else if (message.startsWith('/')) {
       const args = message.slice(1).split(/ +/) //removes ! and split into array
-      this.handleCommand(args, senderID)
+      await this.handleCommand(args, senderID, logs)
     }
   }
 
-  public async handleCommand(args: Array<string>, senderID: string) {
+  public async handleCommand(
+    args: Array<string>,
+    senderID: string,
+    logs: Logs
+  ) {
+    logs.traces.push('Handling Command')
     const command = args[0].toLowerCase()
     const productSKU = +args[1]
-
+    logs.traces.push({
+      command,
+      productSKU,
+    })
     if (!Object.values(Constants.COMMAND).includes(command)) {
-      await this.botService.sendMessage(
-        senderID,
-        'There is no such command as /' + command
-      )
+      const msg = 'There is no such command as /' + command
+      logs.traces.push(msg)
+      await this.botService.sendMessage(senderID, msg)
       return
     } else if (isNaN(productSKU)) {
-      await this.botService.sendMessage(
-        senderID,
-        'Product SKU must be a number'
-      )
+      const msg = 'Product SKU must be a number'
+      logs.traces.push(msg)
+      await this.botService.sendMessage(senderID, msg)
       return
     }
 
@@ -88,12 +105,13 @@ class BotController {
       }
       case Constants.COMMAND.BUY: {
         const product = await this.catalogController.getProduct(productSKU)
+        logs.traces.push({ product })
         if (!product)
           return await this.botService.sendMessage(
             senderID,
             'Product does not exist'
           )
-        await this.sendmailController.sendMail({
+        const msg = {
           subject: 'BUY ORDER FROM ' + senderID,
           text: senderID,
           html: `
@@ -126,11 +144,17 @@ class BotController {
             </tbody>
             </table>
           `,
-        })
+        }
+        logs.traces.push(msg)
+        logs.traces.push('Sending Email')
+        await this.sendmailController.sendMail(msg)
+        logs.traces.push('Email has been sent')
+        logs.traces.push('Sending Message to confirm order')
         await this.botService.sendMessage(
           senderID,
           'We will process your order.'
         )
+        logs.traces.push('Sending Message to confirm order successful')
         break
       }
     }
